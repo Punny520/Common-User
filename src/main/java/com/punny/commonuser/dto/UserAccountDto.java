@@ -41,6 +41,10 @@ public class UserAccountDto implements Serializable {
      * 注册方式
      */
     private AccountCreateType createType;
+    /**
+     * 验证码
+     */
+    private String verifyCode;
 
     private static final long serialVersionUID = 1L;
 
