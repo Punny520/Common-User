@@ -30,7 +30,7 @@ public class Result<T> {
     public static <T> Result<T> success(String msg){
         return new Result<>("1",msg,null);
     }
-    public static <T> Result<T> success(T data,String msg){
+    public static <T> Result<T> success(String msg,T data){
         return new Result<>("1",msg,data);
     }
     public static <T> Result<T> failure(){

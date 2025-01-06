@@ -17,7 +17,7 @@ public class UserAccount implements Serializable {
     /**
      * 主键
      */
-    @TableId
+    @TableId(type = IdType.NONE)
     private Long id;
 
     /**

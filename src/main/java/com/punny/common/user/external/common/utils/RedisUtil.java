@@ -82,7 +82,7 @@ public class RedisUtil {
         stringRedisTemplate.opsForValue().set(key,value);
     }
 
-    public static Object getValue(String key){
+    public static String getValue(String key){
         return stringRedisTemplate.opsForValue().get(key);
     }
 }

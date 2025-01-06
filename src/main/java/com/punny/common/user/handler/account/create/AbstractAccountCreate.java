@@ -1,4 +1,4 @@
-package com.punny.common.user.handler.accountcreate;
+package com.punny.common.user.handler.account.create;
 
 import com.punny.common.user.external.common.Result;
 import com.punny.common.user.dto.UserAccountDto;
@@ -9,5 +9,5 @@ import com.punny.common.user.enums.AccountCreateType;
  */
 public interface AbstractAccountCreate {
     AccountCreateType getType();
-    Result<Void> create(UserAccountDto userAccountDto);
+    Result<?> create(UserAccountDto userAccountDto);
 }

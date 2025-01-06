@@ -4,7 +4,7 @@ import com.punny.common.user.external.common.Result;
 import com.punny.common.user.external.common.utils.SpringContextUtil;
 import com.punny.common.user.dto.UserAccountDto;
 import com.punny.common.user.enums.AccountCreateType;
-import com.punny.common.user.handler.accountcreate.AbstractAccountCreate;
+import com.punny.common.user.handler.account.create.AbstractAccountCreate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class AccountCreateStrategyService implements CommandLineRunner {
     private static final Map<AccountCreateType, AbstractAccountCreate> ACCOUNT_CREATE_HANDLER_MAP = new ConcurrentHashMap<>();
-    public Result<Void> create(UserAccountDto userAccountDto) {
+    public Result<?> create(UserAccountDto userAccountDto) {
         if(userAccountDto.getCreateType() == null){
             throw new IllegalArgumentException("createType is null");
         }
