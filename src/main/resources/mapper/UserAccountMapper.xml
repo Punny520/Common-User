@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.punny.commonuser.mapper.UserAccountMapper">
+<mapper namespace="com.punny.common.user.mapper.UserAccountMapper">
 
-    <resultMap id="BaseResultMap" type="com.punny.commonuser.entity.UserAccount">
+    <resultMap id="BaseResultMap" type="com.punny.common.user.entity.UserAccount">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="account" column="account" jdbcType="VARCHAR"/>
             <result property="password" column="password" jdbcType="VARCHAR"/>

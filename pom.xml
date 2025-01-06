@@ -93,7 +93,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.punny.commonuser.CommonUserApplication</mainClass>
+                    <mainClass>com.punny.common.user.CommonUserApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>
