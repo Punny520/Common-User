@@ -1,12 +1,11 @@
 package com.punny.common.user.handler.account.create;
 
 import cn.dev33.satoken.stp.StpUtil;
-import com.punny.common.user.common.Constant;
 import com.punny.common.user.entity.UserAccount;
 import com.punny.common.user.external.common.Result;
 import com.punny.common.user.dto.UserAccountDto;
 import com.punny.common.user.enums.AccountCreateType;
-import com.punny.common.user.external.common.utils.RedisUtil;
+import com.punny.common.user.handler.code.VerifyCodeResolver;
 import com.punny.common.user.mapper.convert.UserAccountConvert;
 import com.punny.common.user.service.UserAccountService;
 import com.punny.common.user.utils.ArgumentChecker;
@@ -22,11 +21,14 @@ import org.springframework.stereotype.Component;
 public class CreateByEmailHandler implements AbstractAccountCreate {
     private final UserAccountService userAccountService;
     private final ArgumentChecker argumentChecker;
+    private final VerifyCodeResolver verifyCodeResolver;
 
     CreateByEmailHandler(UserAccountService userAccountService,
-                         ArgumentChecker argumentChecker){
+                         ArgumentChecker argumentChecker,
+                         VerifyCodeResolver verifyCodeResolver){
         this.userAccountService = userAccountService;
         this.argumentChecker = argumentChecker;
+        this.verifyCodeResolver = verifyCodeResolver;
     }
     @Override
     public AccountCreateType getType() {
@@ -42,8 +44,7 @@ public class CreateByEmailHandler implements AbstractAccountCreate {
                 //参数检查
                 argumentChecker.userAccountDtoCheckBeforeCreate(userAccountDto);
                 //验证码校验
-                String verifyCode = RedisUtil.getValue(getVerifyCodeKey(userAccountDto.getEmail()));
-                argumentChecker.verifyCodeVerification(userAccountDto.getVerifyCode(), verifyCode);
+                verifyCodeResolver.verification(userAccountDto.getEmail(),userAccountDto.getVerifyCode());
 
                 UserAccount userAccount = UserAccountConvert.INSTANCE.convertDto(userAccountDto);
                 //密码加密
@@ -55,8 +56,5 @@ public class CreateByEmailHandler implements AbstractAccountCreate {
                 return Result.failure(e.getMessage());
             }
             return Result.success("注册成功，已自动登录。",StpUtil.getTokenValue());
-    }
-    private String getVerifyCodeKey(String email){
-        return Constant.ACCOUNT_CREATE_VERIFY_CODE + email;
     }
 }

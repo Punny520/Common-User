@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.punny.common.user.entity.UserAccount;
 import com.punny.common.user.enums.AccountCreateType;
 import com.punny.common.user.external.common.Result;
+import com.punny.common.user.handler.code.VerifyCodeResolver;
 import com.punny.common.user.mapper.UserAccountMapper;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +15,17 @@ import org.springframework.stereotype.Service;
 */
 @Service
 public class UserAccountService extends ServiceImpl<UserAccountMapper, UserAccount>{
+    private final VerifyCodeStrategyService verifyCodeStrategyService;
+    public UserAccountService(VerifyCodeStrategyService verifyCodeStrategyService) {
+        this.verifyCodeStrategyService = verifyCodeStrategyService;
+    }
     /**
      * 获取验证码
      * @param param
      * @return
      */
-    public Result<?> getVerifyCode(String param, AccountCreateType createType) {
-        return null;
+    public Result<?> getVerifyCode(String param, AccountCreateType type) {
+        return verifyCodeStrategyService.setAndSent(param, type);
     }
 }
 

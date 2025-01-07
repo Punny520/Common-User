@@ -26,7 +26,7 @@ public class ArgumentChecker {
     private static final String PASSWORD_PATTERN = "^(?!\\d+$)(?![A-Za-z]+$)[A-Za-z0-9~!@#$%^&*()\\-_=+.,<>?\\|\\[\\]{}:]{8,50}$";  // 密码正则
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";  // 邮箱正则
     private static final String ACCOUNT_PATTERN = "^[a-zA-Z0-9]{1,15}$";  // 账号正则
-    private static final String CODE_PATTERN = "^.{1,10}$";  // 验证码正则
+    private static final String CODE_PATTERN = "^\\d{6}$";  // 验证码正则
 
     // 验证手机号格式
     public void checkPhoneNumberPattern(String phoneNumber) {
@@ -65,7 +65,7 @@ public class ArgumentChecker {
     public void checkVerifyCodePattern(String code) {
         Preconditions.checkArgument(ObjectUtil.isNotNull(code)&&Pattern.matches(CODE_PATTERN, code),
                 "验证码格式不正确：\n" +
-                        "验证码长度必须在1到10个字符之间");
+                        "请输入6位数字验证码");
     }
 
     private void checkAccountExist(UserAccountDto userAccountDto){
