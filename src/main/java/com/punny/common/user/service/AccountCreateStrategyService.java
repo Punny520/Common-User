@@ -1,5 +1,6 @@
 package com.punny.common.user.service;
 
+import com.google.common.base.Preconditions;
 import com.punny.common.user.external.common.Result;
 import com.punny.common.user.external.common.utils.SpringContextUtil;
 import com.punny.common.user.dto.UserAccountDto;
@@ -22,14 +23,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AccountCreateStrategyService implements CommandLineRunner {
     private static final Map<AccountCreateType, AbstractAccountCreate> ACCOUNT_CREATE_HANDLER_MAP = new ConcurrentHashMap<>();
     public Result<?> create(UserAccountDto userAccountDto) {
-        if(userAccountDto.getCreateType() == null){
-            throw new IllegalArgumentException("createType is null");
+        try{
+            Preconditions.checkNotNull(userAccountDto,"error!");
+            Preconditions.checkNotNull(userAccountDto.getAccount(),"请选择一种注册方式");
+            AbstractAccountCreate handler = ACCOUNT_CREATE_HANDLER_MAP.get(userAccountDto.getCreateType());
+            Preconditions.checkNotNull(handler,"no such create type " + userAccountDto.getCreateType());
+            return handler.create(userAccountDto);
+        }catch (Exception e){
+            return Result.failure(e.getMessage());
         }
-        AbstractAccountCreate handler = ACCOUNT_CREATE_HANDLER_MAP.get(userAccountDto.getCreateType());
-        if (handler == null) {
-            throw new IllegalArgumentException("no such create type " + userAccountDto.getCreateType());
-        }
-        return handler.create(userAccountDto);
     }
 
     @Override

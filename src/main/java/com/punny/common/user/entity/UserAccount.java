@@ -43,6 +43,7 @@ public class UserAccount implements Serializable {
     /**
      * 是否可用
      */
+    @TableField(fill = FieldFill.INSERT)
     private Boolean enable;
 
     /**
@@ -61,6 +62,7 @@ public class UserAccount implements Serializable {
      * 删除标记
      */
     @TableLogic
+    @TableField(fill = FieldFill.INSERT)
     private Boolean deleted;
 
     @TableField(exist = false)

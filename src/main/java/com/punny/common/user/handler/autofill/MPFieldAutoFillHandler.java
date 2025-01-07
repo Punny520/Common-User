@@ -14,6 +14,8 @@ public class MPFieldAutoFillHandler implements MetaObjectHandler {
         log.info("执行插入填充...");
         this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
         this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
+        this.setFieldValByName("deleted", false, metaObject);
+        this.setFieldValByName("enable", true, metaObject);
     }
 
     @Override

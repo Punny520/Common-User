@@ -1,12 +1,14 @@
 package com.punny.common.user.utils;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.base.Preconditions;
 import com.punny.common.user.dto.UserAccountDto;
 import com.punny.common.user.entity.UserAccount;
 import com.punny.common.user.enums.AccountCreateType;
 import com.punny.common.user.service.UserAccountService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
@@ -15,6 +17,7 @@ import java.util.regex.Pattern;
  * 参数校验工具类
  */
 @Component
+@Slf4j
 public class ArgumentChecker {
     private final UserAccountService userAccountService;
 
@@ -112,6 +115,7 @@ public class ArgumentChecker {
             checkEmailExist(dto);
         }
         checkPasswordPattern(dto.getPassword());
+        Preconditions.checkArgument(dto.getPassword().equals(dto.getConfirmPassword()),"两次输入的密码不一样");
     }
 
     /**
@@ -120,6 +124,7 @@ public class ArgumentChecker {
      * @param exceptValue 预期的验证码
      */
     public void verifyCodeVerification(String currentValue,String exceptValue) {
+        log.info("currentValue:{},exceptValue:{}", currentValue, exceptValue);
         checkVerifyCodePattern(currentValue);
         Preconditions.checkNotNull(exceptValue,"验证码已过期,请重新获取");
         Preconditions.checkArgument(exceptValue.equals(currentValue),"验证码错误");
